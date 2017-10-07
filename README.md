@@ -4,7 +4,7 @@ Modern rewrite of the ThickBox 3.1 JS library by Cody Lindley
 
 # Changes
 * Development in `'use strict'` environment;
-* Wrapping library in an IFFE
+* Wrapping library in an IIFE
 * Updating `tb_parseQuery` function (Bugs: )
 * Using $ alias for jQuery
 * Enclosing leaked global variables into function scope
