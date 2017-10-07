@@ -13,7 +13,7 @@ Modern rewrite of the ThickBox 3.1 JS library by Cody Lindley
 * Prettier comments
 * Removing polyfills for older than IE7 browsers
 * Adding minified version
-* Chaining jQuery methods on the same object
+* Chaining jQuery methods on the same selector object
 * Moving variables declaration at the beginning of functions
 * Caching jQuery selectors (e.g., `$("body")`)
 * Adding proper spaces and indentation for a more readable code
