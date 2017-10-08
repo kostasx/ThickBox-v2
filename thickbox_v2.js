@@ -174,6 +174,7 @@
 				}
 
 				$(document).bind('keydown.thickbox', function(e){
+
 					if ( e.which == 27 ){ // Close
 						tb_remove();
 
@@ -357,7 +358,7 @@
 
 		query = query.split( "?" );
 		query = query.filter(function(u){ return ~u.indexOf('='); });
-		query = query.map(function(u){ return u.replace( "#TB_inline", "" ); }).join('&');  
+		query = query.map(function(u){ return u.replace( /#?TB_inline&?/, "" ); }).join('&');  
 		var Params = query.split("&").reduce(function(acc,prev){
 			var keyValue = prev.split("="); 
 			var key = unescape(keyValue[0]);

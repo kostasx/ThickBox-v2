@@ -1,7 +1,13 @@
+// TESTS:
+// [wp-trac] [WordPress Trac] #27473: Thickbox width and height parameters are ignored when using TB_iframe
+// http://lists.automattic.com/pipermail/wp-trac/2015-December/282157.html
+// href="/?TB_inline&width=800&height=640&inlineId=someId"
+
 var inputQueries = [
 	'post=174&action=edit&width=900&height=500&inlineId=someElId',
 	'ajax.php?post=174&action=edit&width=900&height=500&inlineId=someElId',
-	'post=174&action=edit#TB_inline?width=900&height=500&inlineId=someElId'
+	'post=174&action=edit#TB_inline?width=900&height=500&inlineId=someElId',
+	'/?TB_inline&width=800&height=640&inlineId=someId'
 ];
 
 var outputParameters = {
@@ -11,6 +17,14 @@ var outputParameters = {
 	height   : "500",
 	inlineId : "someElId"
 };
+
+var outputParameters3 = {
+
+	width    : "800",
+	height   : "640",
+	inlineId : "someId"	
+
+}
 
 function _tb_parseQuery_deprecated ( query ) {
    var Params = {};
@@ -31,7 +45,7 @@ function tb_parseQuery( query ){
 
 	query = query.split( "?" );
 	query = query.filter(function(u){ return ~u.indexOf('='); });
-	query = query.map(function(u){ return u.replace( "#TB_inline", "" ); }).join('&');  
+	query = query.map(function(u){ return u.replace( /#?TB_inline&?/, "" ); }).join('&');  
 	var Params = query.split("&").reduce(function(acc,prev){
 		var keyValue = prev.split("="); 
 		var key = unescape(keyValue[0]);
@@ -71,6 +85,16 @@ describe("ThickBox v2", function() {
     it("should be properly converted to parameter objects", function() {
 
 		expect(tb_parseQuery(inputQueries[2])).to.deep.equal(outputParameters);
+
+    });
+
+  });
+
+  describe("Query: " + inputQueries[3], function() {
+
+    it("should be properly converted to parameter objects", function() {
+
+		expect(tb_parseQuery(inputQueries[3])).to.deep.equal(outputParameters3);
 
     });
 
