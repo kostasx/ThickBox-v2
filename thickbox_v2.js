@@ -356,19 +356,27 @@
 
 	function tb_parseQuery( query ){
 
-		query = query.split( "?" );
-		query = query.filter(function(u){ return ~u.indexOf('='); });
-		query = query.map(function(u){ return u.replace( /#?TB_inline&?/, "" ); }).join('&');  
+	  query = query
+	    .split( "?" )
+	    .filter(function(u){ return ~u.indexOf('='); })
+	    .join('')
+	    .split(/#?TB_inline(?:=true)?&?/)
+	    .filter(function(u){ return Boolean(u); })
+	    .join("&"); 
+
 		var Params = query.split("&").reduce(function(acc,prev){
+
 			var keyValue = prev.split("="); 
 			var key = unescape(keyValue[0]);
 			var value = unescape(keyValue[1]).replace(/\+/g, ' ');
 			acc[key] = value;
 			return acc;
-		},{});
-		return Params;
-	}
 
+		},{});
+
+		return Params;
+
+	}
 	function tb_getPageSize(){
 
 		var de = document.documentElement;
