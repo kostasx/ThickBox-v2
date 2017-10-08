@@ -252,6 +252,7 @@
 
 				var $TB_closeWindowButton = $("#TB_closeWindowButton");
 
+				// INLINE CONTENT
 				if ( -1 !== url.indexOf('TB_inline') ){
 
 					var $TB_ajaxContent = $("#TB_ajaxContent");
@@ -264,15 +265,17 @@
 					$("#TB_window").bind('tb_unload', function(){ $inlineId.append( $TB_ajaxContent.children() ); });
 					tb_position();
 					$("#TB_load").remove();
-					$("#TB_window").css({'visibility':'visible'});
+					$("#TB_window").css({ 'visibility': 'visible' });
 
+				// IFRAME CONTENT
 				} else if ( -1 !== url.indexOf('TB_iframe') ) {
 
 					$TB_closeWindowButton.click(tb_remove);
 					tb_position();
 					$("#TB_load").remove();
-					$("#TB_window").css({'visibility':'visible'});
+					$("#TB_window").css({ 'visibility': 'visible' });
 
+				// AJAX CONTENT
 				} else {
 
 					$TB_closeWindowButton.click(tb_remove);
