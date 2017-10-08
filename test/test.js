@@ -1,20 +1,7 @@
 /*
-Test are trying to address the following issues:
-
-[wp-trac] [WordPress Trac] #27473: Thickbox width and height parameters are ignored when using TB_iframe
-http://lists.automattic.com/pipermail/wp-trac/2015-December/282157.html
-href="/?TB_inline&width=800&height=640&inlineId=someId"
-
+Tests are trying to resolve issues mentioned in these two tickets:
 https://core.trac.wordpress.org/ticket/10955
-
 https://core.trac.wordpress.org/ticket/27473
-
-@afercia: The query string thing is a secondary issue, you can always use something like this:
-href="/?TB_inline&width=800&height=640&inlineId=someId"
-with a slash at the beginning, the resulting link will have just the parameters thickbox needs, regardless if the page URL you're currently in has a query string or not.
-Btw this should be documented, average users will tend to just copy and paste the example in the documentation.
-  @chrisvanpatten: so it's a mix of bad documentation *and* an actual bug.
-
 */
 
 var inputQueries = [
@@ -95,6 +82,7 @@ var outputParameters8 = {
 
 }
 
+// Copied from thickbox_v2.js file
 function tb_parseQuery( query ){
 
   query = query
