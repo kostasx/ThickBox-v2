@@ -9,18 +9,25 @@ https://core.trac.wordpress.org/ticket/10955
 
 https://core.trac.wordpress.org/ticket/27473
 
+@afercia: The query string thing is a secondary issue, you can always use something like this:
+href="/?TB_inline&width=800&height=640&inlineId=someId"
+with a slash at the beginning, the resulting link will have just the parameters thickbox needs, regardless if the page URL you're currently in has a query string or not.
+Btw this should be documented, average users will tend to just copy and paste the example in the documentation.
+  @chrisvanpatten: so it's a mix of bad documentation *and* an actual bug.
+
 */
 
 var inputQueries = [
+
 	'post=174&action=edit&width=900&height=500&inlineId=someElId',					       // 0
 	'ajax.php?post=174&action=edit&width=900&height=500&inlineId=someElId',			   // 1
 	'post=174&action=edit#TB_inline?width=900&height=500&inlineId=someElId',		   // 2
 	'/?TB_inline&width=800&height=640&inlineId=someId',								             // 3
 	'?TB_iframe=true&width=450&height=120',											                   // 4
-	'?post=4524&action=edit#TB_inline?width=840&height=640&inlineId=my-thickbox',	 // 5
-	'?post=4524&action=edit#TB_inline&width=840&height=640&inlineId=my-thickbox',	 // 6
-	'?post=4524&action=edit#TB_inline=true&width=840&height=640&inlineId=my-thickbox'// 7
-
+	'?post=174&action=edit#TB_inline?width=840&height=640&inlineId=my-thickbox',	 // 5
+	'?post=174&action=edit#TB_inline&width=840&height=640&inlineId=my-thickbox',	 // 6
+	'?post=174&action=edit#TB_inline=true&width=840&height=640&inlineId=my-thickbox',// 7
+  '?post=174&action=edit#TB_inline?&inlineId=my-thickbox&height=640&width=840'   // 8
 
 ];
 
@@ -50,7 +57,7 @@ var outputParameters4 = {
 
 var outputParameters5 = {
 
-	post     : "4524",
+	post     : "174",
 	action   : "edit",
 	width    : "840",
 	height   : "640",
@@ -60,7 +67,7 @@ var outputParameters5 = {
 
 var outputParameters6 = {
 
-  post     : "4524",
+  post     : "174",
   action   : "edit",
   width    : "840",
   height   : "640",
@@ -70,7 +77,17 @@ var outputParameters6 = {
 
 var outputParameters7 = {
 
-  post      : "4524",
+  post      : "174",
+  action    : "edit",
+  width     : "840",
+  height    : "640",
+  inlineId  : "my-thickbox"
+
+}
+
+var outputParameters8 = {
+
+  post      : "174",
   action    : "edit",
   width     : "840",
   height    : "640",
@@ -180,7 +197,17 @@ describe("ThickBox v2", function() {
 
     it("should be properly converted to parameter objects", function() {
 
-		  expect(tb_parseQuery(inputQueries[7])).to.deep.equal(outputParameters7);
+      expect(tb_parseQuery(inputQueries[7])).to.deep.equal(outputParameters7);
+
+    });
+
+  });
+
+  describe("Query #8: " + inputQueries[8], function() {
+
+    it("should be properly converted to parameter objects", function() {
+
+		  expect(tb_parseQuery(inputQueries[8])).to.deep.equal(outputParameters8);
 
     });
 

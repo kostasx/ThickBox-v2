@@ -377,6 +377,7 @@
 		return Params;
 
 	}
+
 	function tb_getPageSize(){
 
 		var de = document.documentElement;
