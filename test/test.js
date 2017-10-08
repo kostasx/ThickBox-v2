@@ -1,7 +1,15 @@
-// TESTS:
-// [wp-trac] [WordPress Trac] #27473: Thickbox width and height parameters are ignored when using TB_iframe
-// http://lists.automattic.com/pipermail/wp-trac/2015-December/282157.html
-// href="/?TB_inline&width=800&height=640&inlineId=someId"
+/*
+Test are trying to address the following issues:
+
+[wp-trac] [WordPress Trac] #27473: Thickbox width and height parameters are ignored when using TB_iframe
+http://lists.automattic.com/pipermail/wp-trac/2015-December/282157.html
+href="/?TB_inline&width=800&height=640&inlineId=someId"
+
+https://core.trac.wordpress.org/ticket/10955
+
+https://core.trac.wordpress.org/ticket/27473
+
+*/
 
 var inputQueries = [
 	'post=174&action=edit&width=900&height=500&inlineId=someElId',
