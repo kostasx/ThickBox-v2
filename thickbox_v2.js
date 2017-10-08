@@ -7,11 +7,12 @@
 
 	"use strict";
 
+	var imgLoader, TB_WIDTH, TB_HEIGHT, ajaxContentW, ajaxContentH;
+	var $body = $(document.body);
+
 	if ( typeof tb_pathToImage !== 'string' ) {
 		var tb_pathToImage = thickboxL10n.loadingAnimation;
 	}
-
-	var imgLoader;
 
 	// On page load call tb_init
 	$(function(){
@@ -46,7 +47,6 @@
 
 		var $closeBtn;
 		var baseURL;
-		var $body = $("body");
 
 		try {
 			if ( document.getElementById("TB_overlay") === null ){
@@ -304,7 +304,11 @@
 				$closeBtn.focus();
 			}
 
-		} catch(e) {}
+		} catch(e) {
+
+			console.log(e);
+
+		}
 
 	}
 
@@ -337,21 +341,6 @@
 			width      : TB_WIDTH + 'px'
 		 });
 
-	}
-
-	function _tb_parseQuery_deprecated ( query ) {
-	   var Params = {};
-	   if ( ! query ) {return Params;}// return empty object
-	   var Pairs = query.split(/[;&]/);
-	   for ( var i = 0; i < Pairs.length; i++ ) {
-	      var KeyVal = Pairs[i].split('=');
-	      if ( ! KeyVal || KeyVal.length != 2 ) {continue;}
-	      var key = unescape( KeyVal[0] );
-	      var val = unescape( KeyVal[1] );
-	      val = val.replace(/\+/g, ' ');
-	      Params[key] = val;
-	   }
-	   return Params;
 	}
 
 	function tb_parseQuery( query ){
