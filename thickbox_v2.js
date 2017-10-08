@@ -67,7 +67,7 @@
 			}
 
 			if ( caption === null ){ caption = ""; }
-			$body.append("<div id='TB_load'><img src='"+imgLoader.src+"' width='208' /></div>");	// Add loader to the page
+			$body.append("<div id='TB_load'><img src='" + imgLoader.src + "' width='208' /></div>");	// Add loader to the page
 			$('#TB_load').show();	// Show loader
 
 		   if ( url.indexOf("?") !==- 1 ){ // ff there is a query string involved
@@ -250,36 +250,42 @@
 						}
 				}
 
-				$("#TB_closeWindowButton").click(tb_remove);
+				var $TB_closeWindowButton = $("#TB_closeWindowButton");
 
-					if ( -1 !== url.indexOf('TB_inline') ){
+				if ( -1 !== url.indexOf('TB_inline') ){
 
-						$("#TB_ajaxContent").append($('#' + params['inlineId']).children());
-						$("#TB_window").bind('tb_unload', function () {
-							$('#' + params['inlineId']).append( $("#TB_ajaxContent").children() ); // move elements back when you're finished
-						});
+					var $TB_ajaxContent = $("#TB_ajaxContent");
+					var $inlineId       = $('#' + params['inlineId']); 
+
+					$TB_closeWindowButton.click(tb_remove.bind($TB_closeWindowButton, $inlineId));
+
+					$TB_ajaxContent.append($inlineId.children());
+					// Move elements back when you're finished:
+					$("#TB_window").bind('tb_unload', function(){ $inlineId.append( $TB_ajaxContent.children() ); });
+					tb_position();
+					$("#TB_load").remove();
+					$("#TB_window").css({'visibility':'visible'});
+
+				} else if ( -1 !== url.indexOf('TB_iframe') ) {
+
+					$TB_closeWindowButton.click(tb_remove);
+					tb_position();
+					$("#TB_load").remove();
+					$("#TB_window").css({'visibility':'visible'});
+
+				} else {
+
+					$TB_closeWindowButton.click(tb_remove);
+					var load_url = url;
+					load_url += -1 === url.indexOf('?') ? '?' : '&';
+					$("#TB_ajaxContent").load(load_url += "random=" + (new Date().getTime()),function(){
+					// To do a post change this load method
 						tb_position();
 						$("#TB_load").remove();
-						$("#TB_window").css({'visibility':'visible'});
-
-					} else if ( -1 !== url.indexOf('TB_iframe') ) {
-
-						tb_position();
-						$("#TB_load").remove();
-						$("#TB_window").css({'visibility':'visible'});
-
-					} else {
-
-						var load_url = url;
-						load_url += -1 === url.indexOf('?') ? '?' : '&';
-						$("#TB_ajaxContent").load(load_url += "random=" + (new Date().getTime()),function(){
-						// To do a post change this load method
-							tb_position();
-							$("#TB_load").remove();
-							tb_init("#TB_ajaxContent a.thickbox");
-							$("#TB_window").css({ 'visibility' : 'visible' });
-						});
-					}
+						tb_init("#TB_ajaxContent a.thickbox");
+						$("#TB_window").css({ 'visibility' : 'visible' });
+					});
+				}
 
 			}
 
@@ -319,7 +325,8 @@
 		$("#TB_window").css({'visibility':'visible'}).trigger( 'thickbox:iframe:loaded' );
 	}
 
-	function tb_remove() {
+	function tb_remove(el) {
+
 	 	$("#TB_imageOff").unbind("click");
 		$("#TB_closeWindowButton").unbind("click");
 		$( '#TB_window' ).fadeOut( 'fast', function() {
@@ -329,6 +336,7 @@
 		$body.removeClass( 'modal-open' );
 		$("#TB_load").remove();
 		$(document).unbind('.thickbox');
+		if ( el ){ $(el).trigger('close'); }
 		return false;
 	}
 
