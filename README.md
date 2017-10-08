@@ -18,6 +18,7 @@ Modern rewrite of the ThickBox 3.1 JS library by Cody Lindley
 * Caching jQuery selectors (e.g., `$("body")`)
 * Adding proper spaces and indentation for a more readable code
 * Yoda conditions
+* Testing using Mocha and Chai
 * Removing unnecessary conditional: 			
 	`if ( urlType == '.jpg' || urlType == '.jpeg' || urlType == '.png' || urlType == '.gif' || urlType == '.bmp' ){`
 	-->
@@ -25,4 +26,5 @@ Modern rewrite of the ThickBox 3.1 JS library by Cody Lindley
 
 
 # TODO
-* Add Tests
+* Add More Tests
+* Address request: "For example, I'm trying to use it for a plugin of mine and I'm wanting to tie into the "onClose" event for ThickBox which isn't too easily done." (https://core.trac.wordpress.org/ticket/10955)
