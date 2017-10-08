@@ -24,6 +24,7 @@ Modern rewrite of the ThickBox 3.1 JS library by Cody Lindley
   -->
   `if ( urlType )`
 * Adding code for for `onClose` event request ([https://core.trac.wordpress.org/ticket/10955](https://core.trac.wordpress.org/ticket/10955)): "For example, I'm trying to use it for a plugin of mine and I'm wanting to tie into the "onClose" event for ThickBox which isn't too easily done.".
+* Completed tests according to users' requests from [ticket #27473](https://core.trac.wordpress.org/ticket/27473)
 
 # CLOSE EVENT
 
